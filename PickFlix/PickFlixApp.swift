@@ -10,6 +10,18 @@ import SwiftData
 
 @main
 struct PickFlixApp: App {
+    
+    /// ------------
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+        .modelContainer(sharedModelContainer)
+    }
+    
+    /// ------------
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -22,11 +34,4 @@ struct PickFlixApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        .modelContainer(sharedModelContainer)
-    }
 }

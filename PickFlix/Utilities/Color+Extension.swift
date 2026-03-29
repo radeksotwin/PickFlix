@@ -1,0 +1,32 @@
+//
+//  Untitled.swift
+//  PickFlix
+//
+//  Created by Rdm on 29/03/2026.
+//
+
+import SwiftUI
+
+extension Color {
+    static func fromHEX(_ hex: String) -> Color {
+        var cString = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        
+        if cString.hasPrefix("#") {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if cString.count != 6 {
+            return Color(uiColor: UIColor.gray)
+        }
+        
+        var rgbValue:UInt64 = 0
+        Scanner(string: cString).scanHexInt64(&rgbValue)
+        
+        return Color(uiColor: UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)))
+        
+    }
+}

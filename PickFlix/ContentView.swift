@@ -8,34 +8,47 @@
 import SwiftUI
 import SwiftData
 
+struct BackgroundView: View {
+    var isDarkAppearance: Bool
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [isDarkAppearance ? .black : .gray,
+                                                   isDarkAppearance ? .yellow : .black]),
+                       startPoint: .topLeading,
+                       endPoint: .bottomTrailing)
+        .ignoresSafeArea()
+    }
+}
+
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
-
+    ///
+    ///
+    ///
+    @State var isNight = false
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+        ZStack {
+            BackgroundView(isDarkAppearance: isNight) // Check how the binding works
+
+            VStack {
+                Spacer()
+                
+                Label("PickFlix", systemImage: "film")
+                    .font(.custom("", fixedSize: 42))
+                    .fontWeight(.semibold)
+                    .foregroundColor(isNight ? .black : .white)
+                    
+                Spacer().frame(height: 350)
+                
+                Button(action: {
+                    isNight.toggle()
+                }, label: {
+                    Label("Toggle Darkmode!", systemImage: "togglepower")
+                        .foregroundColor(isNight ? .black : .white)
+                })
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
         }
     }
 
