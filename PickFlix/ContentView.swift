@@ -8,6 +8,8 @@
 import SwiftUI
 import SwiftData
 
+// Set remote for git repository
+
 struct BackgroundView: View {
     var isDarkAppearance: Bool
     
