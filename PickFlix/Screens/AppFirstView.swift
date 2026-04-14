@@ -22,7 +22,7 @@ struct BackgroundView: View {
     }
 }
 
-struct ContentView: View {
+struct AppFirstView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     ///
@@ -38,8 +38,8 @@ struct ContentView: View {
                 Spacer()
                 
                 Label("PickFlix", systemImage: "film")
-                    .font(.custom("", fixedSize: 42))
-                    .fontWeight(.semibold)
+                    .font(.custom("Avenir", fixedSize: 42))
+                    .fontWeight(.heavy)
                     .foregroundColor(isNight ? .black : .white)
                     
                 Spacer().frame(height: 350)
@@ -49,6 +49,7 @@ struct ContentView: View {
                 }, label: {
                     Label("Toggle Darkmode!", systemImage: "togglepower")
                         .foregroundColor(isNight ? .black : .white)
+                        .font(.custom("", fixedSize: 13))
                 })
             }
         }
@@ -71,6 +72,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    AppFirstView()
         .modelContainer(for: Item.self, inMemory: true)
 }
