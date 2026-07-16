@@ -15,7 +15,10 @@ struct MovieResultView: View {
     
     /// ---
     
-    let movie: Movie
+    let movie = Movie(title: "Scarface",
+                      overview: "The story about The story abou The story about The story about The story about The story about",
+                      posterURL: "https://www.sdkskds.com",
+                      platforms: ["Netflix, HBO GO, Filmweb"])
     var onWatch: (() -> Void)? = {}
     var onAnother: (() -> Void)? = {}
     var onSave: (() -> Void)? = {}
@@ -28,7 +31,7 @@ struct MovieResultView: View {
             VStack(spacing: 16) {
                 
                 // Poster
-                AsyncImage(url: URL(string: movie.posterURL)) { image in
+                AsyncImage(url: URL(string: movie.posterURL ?? "")) { image in
                     image
                         .resizable()
                         .scaledToFill()
@@ -52,14 +55,14 @@ struct MovieResultView: View {
                 .padding(.top, 16)
                 
                 // Title
-                Text(movie.title)
+                Text(movie.title ?? "")
                     .font(.system(size: 28, weight: .bold))
                     .foregroundColor(.white)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 24)
                 
                 // Description
-                Text(movie.overview)
+                Text(movie.overview ?? "")
                     .font(.system(size: 16))
                     .foregroundColor(Color.fromHEX("#A1A1AA"))
                     .multilineTextAlignment(.center)
@@ -68,7 +71,7 @@ struct MovieResultView: View {
                 
                 // Platforms
                 HStack(spacing: 8) {
-                    ForEach(movie.platforms, id: \.self) { platform in
+                    ForEach(movie.platforms ?? [""], id: \.self) { platform in
                         Text(platform)
                             .font(.system(size: 13, weight: .medium))
                             .padding(.horizontal, 12)
@@ -119,5 +122,5 @@ struct MovieResultView: View {
 }
 
 #Preview {
-    MovieResultView(movie: MovieResultView.sampleMovie)
+    MovieResultView()
 }
