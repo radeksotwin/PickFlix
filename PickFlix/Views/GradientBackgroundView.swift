@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct WelcomeScreenBackgroundView: View {
+struct GradientBackgroundView: View {
     @State private var animate = false
     
     var body: some View {
@@ -18,7 +18,7 @@ struct WelcomeScreenBackgroundView: View {
                        endPoint: .bottomTrailing)
         .onAppear() {
             withAnimation(
-                .easeInOut(duration: 2.7)
+                .easeInOut(duration: 4.7)
                 .repeatForever(autoreverses: true)) {
                 animate.toggle()
             }

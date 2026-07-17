@@ -8,6 +8,6 @@
 import Foundation
 
 enum AppScreen: Hashable {
-    case welcomeScreenView
-    case resultView
+    case welcomeToPickFlix
+    case searchForMovie
 }

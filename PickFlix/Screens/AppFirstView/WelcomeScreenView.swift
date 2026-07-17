@@ -8,87 +8,112 @@
 import SwiftUI
 import SwiftData
 
+// To future refactor:
+// - Wrap animations to a PhaseAnimator object to get consistent behavior of UI for the whole app
+
 struct WelcomeScreenView: View {
-    @State var isNight = false
     @StateObject var viewModel = WelcomeScreenViewModel()
-    @State private var appPath = NavigationPath()
- 
+
     var body: some View {
-        NavigationStack(path: $appPath) {
-            ZStack {
-                WelcomeScreenBackgroundView()
-   
-                VStack {
-                    Spacer()
-                    
-                    if viewModel.firstTextVisible {
-                        Text("Still scrolling?")
-                            .font(.largeTitle.bold())
-                            .foregroundStyle(.white)
-                            .transition(.opacity)
-                        
-                    }
-                    
-                    if viewModel.secondTextVisible {
-                        Text("Let's fix that.")
-                            .font(.largeTitle.bold())
-                            .foregroundStyle(.white)
-                            .transition(.opacity)
-                    }
-                    
-                    if viewModel.logoVisible {
-                        VStack(spacing: 12) {
-                            Label("PickFlix", systemImage: "film")
-                                .font(.custom("Avenir Next", fixedSize: 47))
-                                .fontWeight(.heavy)
-                                .foregroundColor(.white)
-                        }
+        ZStack {
+            // FOR DEBUG
+            // Color.blue.ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                
+                if viewModel.firstTextVisible {
+                    Text("Still scrolling?")
+                        .font(.largeTitle.bold())
                         .foregroundStyle(.white)
-                        .transition(
-                            .scale(scale: 2.7)
-                            .combined(with: .opacity)
-                        )
-                    }
-                    
-                    if viewModel.subtitleVisible {
-                        VStack(spacing: 4) {
-                            Text("One movie.")
-                            Text("One decision.")
-                        }
-                        .font(.headline)
-                        .foregroundStyle(.gray)
-                        .padding(.top, 24)
                         .transition(.opacity)
-                    }
                     
-                    Spacer()
-                    
-                    if viewModel.buttonVisible {
-                        StartSearchButton(action: {
-                            appPath.append(AppScreen.resultView)
-                        })
-                        .padding(.bottom, 80)
-                    }
                 }
-            }
-            
-            .onTapGesture {
+                
+                if viewModel.secondTextVisible {
+                    Text("Let's fix that.")
+                        .font(.largeTitle.bold())
+                        .foregroundStyle(.white)
+                        .transition(.opacity)
+                }
+                
                 if viewModel.logoVisible {
-                    viewModel.hideContent()
-                } else {
-                    viewModel.startAnimation()
+                    VStack(spacing: 12) {
+                        Label("PickFlix", systemImage: "film")
+                            .font(.custom("Avenir Next", fixedSize: 47))
+                            .fontWeight(.heavy)
+                            .foregroundColor(.white)
+                    }
+                    .foregroundStyle(.white)
+                    .transition(
+                        .scale(scale: 2.7)
+                        .combined(with: .opacity)
+                    )
+                    .scaleEffect(viewModel.isTransitioning ? 0.92 : 1)
+                    .opacity(viewModel.isTransitioning ? 0 : 1)
+                    .blur(radius: viewModel.isTransitioning ? 6 : 0)
+                    .animation(
+                        .spring(duration: 0.45),
+                        value: viewModel.isTransitioning
+                    )
+                }
+                
+                if viewModel.subtitleVisible {
+                    VStack(spacing: 4) {
+                        Text("One movie.")
+                        Text("One decision.")
+                    }
+                    .font(.headline)
+                    .foregroundStyle(.gray)
+                    .padding(.top, 24)
+                    .transition(.opacity)
+                    .opacity(viewModel.isTransitioning ? 0 : 1)
+                    .offset(y: viewModel.isTransitioning ? -15 : 0)
+                    .animation(
+                        .easeOut(duration: 0.35)
+                        .delay(0.05),
+                        value: viewModel.isTransitioning
+                    )
+                }
+                
+                Spacer()
+                
+                if viewModel.buttonVisible {
+                    StartSearchButton(action: {
+                        startMovieSearch()
+                    })
+                    .padding(.bottom, 80)
+                    .opacity(viewModel.isTransitioning ? 0 : 1)
+                    .scaleEffect(viewModel.isTransitioning ? 0.85 : 1)
                 }
             }
-            
-            .navigationDestination(for: AppScreen.self,
-                                   destination: { screen in
-                switch screen {
-                case .resultView:
-                    MovieResultView()
-                case .welcomeScreenView:
-                    self
-                }
-            })
+        }
+        
+        .onTapGesture {
+            if viewModel.logoVisible {
+                viewModel.hideContent()
+            } else {
+                viewModel.startAnimation()
+            }
+        }
+        
+        .onAppear() {
+            viewModel.startAnimation()
+        }
+    }
+    
+    private func startMovieSearch() {
+        withAnimation(
+            .spring(
+                duration: 0.45,
+                bounce: 0.12
+            )
+        ) {
+            viewModel.isTransitioning = true
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+         
         }
     }
 }

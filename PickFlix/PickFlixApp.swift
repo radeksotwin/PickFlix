@@ -15,7 +15,7 @@ struct PickFlixApp: App {
     
     var body: some Scene {
         WindowGroup {
-            WelcomeScreenView()
+           PickFlixAppContainerView()
         }
         .modelContainer(sharedModelContainer)
     }

@@ -10,7 +10,7 @@ import Combine
 
 @MainActor
 final class WelcomeScreenViewModel: ObservableObject {
-
+    @Published var isTransitioning = false
     @Published var firstTextVisible = false
     @Published var secondTextVisible = false
     @Published var logoVisible = false
@@ -70,5 +70,6 @@ final class WelcomeScreenViewModel: ObservableObject {
         logoVisible = false
         subtitleVisible = false
         buttonVisible = false
+        isTransitioning = false
     }
 }
