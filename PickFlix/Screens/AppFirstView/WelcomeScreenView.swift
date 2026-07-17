@@ -16,8 +16,8 @@ struct WelcomeScreenView: View {
     var body: some View {
         NavigationStack(path: $appPath) {
             ZStack {
-                WelcomeScreenBackgroundView(isDarkAppearance: isNight)
-                
+                WelcomeScreenBackgroundView()
+   
                 VStack {
                     Spacer()
                     
@@ -41,7 +41,7 @@ struct WelcomeScreenView: View {
                             Label("PickFlix", systemImage: "film")
                                 .font(.custom("Avenir Next", fixedSize: 47))
                                 .fontWeight(.heavy)
-                                .foregroundColor(isNight ? .black : .white)
+                                .foregroundColor(.white)
                         }
                         .foregroundStyle(.white)
                         .transition(

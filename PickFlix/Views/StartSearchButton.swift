@@ -14,7 +14,7 @@ struct StartSearchButton: View {
 
     var body: some View {
         Button {
-            Haptics.generateImpact(.medium)
+            Haptics.generateImpact(.soft)
             action()
         } label: {
             ZStack {
