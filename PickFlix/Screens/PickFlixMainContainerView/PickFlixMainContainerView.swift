@@ -15,56 +15,40 @@ struct PickFlixAppContainerView: View {
 
             switch viewModel.currentScreen {
             case .welcomeToPickFlix:
-                WelcomeScreenView()
+                WelcomeScreenView(onStartSearch: viewModel.startSearch)
                     .transition(
-                        .opacity
-                            .combined(
-                                with: .scale(scale:0.96)
-                            )
+                        .opacity.combined(with: .scale(scale: 0.96))
                     )
+
             case .searchForMovie:
-                SearchMovieView()
-                    .transition(
-                        .opacity
-                            .combined(
-                                with:
-                                        .scale(scale:1.04)
-                            )
+                SearchMovieView(
+                    engine: viewModel.engine,
+                    onMovieFound: viewModel.showMovie
+                )
+                .transition(
+                    .opacity.combined(with: .scale(scale: 1.04))
+                )
+
+            case .movieResult:
+                if let movie = viewModel.selectedMovie {
+                    MovieResultView(
+                        movie: movie,
+                        onAnother: viewModel.pickAnother,
+                        onWatch: viewModel.goToWelcome
                     )
-                
+                    .transition(
+                        .opacity.combined(with: .scale(scale: 1.04))
+                    )
+                }
             }
         }
-        
         .animation(
-            .spring(
-                duration:0.55,
-                bounce:0.15
-            ),
+            .spring(duration: 0.55, bounce: 0.15),
             value: viewModel.currentScreen
         )
-    }
-    
-    private func startTransition() {
-        withAnimation(
-            .spring(
-                duration:0.45,
-                bounce:0.1
-            )
-        ){
-            viewModel.transition = true
-        }
-        
-        
-        DispatchQueue.main.asyncAfter(
-            deadline:.now()+0.35
-        ){
-            withAnimation {
-                viewModel.currentScreen = .searchForMovie
-            }
-        }
     }
 }
 
 #Preview {
-   PickFlixAppContainerView()
+    PickFlixAppContainerView()
 }

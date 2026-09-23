@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TMDB_API_KEY                                                                                                                                                                                                                              
+    - WATCHMODE_API_KEY = $(WATCHMODE_API_KEY</key>
+	<string>$(799dfb6672bb4dd7dd3f8eead44cb4ff)    </string>
+	<key>WATCHMODE_API_KEY</key>
+	<string> $(gEZQXbKsruJFhgUmrG8QdX3RvpBHXCU0QXzZxF0s)   </string>
+</dict>
+</plist>

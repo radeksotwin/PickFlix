@@ -1,5 +1,5 @@
 //
-//  MovieResultView.swift
+//  SearchMovieView.swift
 //  PickFlix
 //
 //  Created by Rdm on 14/04/2026.
@@ -8,81 +8,77 @@
 import SwiftUI
 
 struct SearchMovieView: View {
-    static let sampleMovie = Movie(title: "Scarface",
-                            overview: "The story about The story abou The story about The story about The story about The story about",
-                                   posterURL: "https://www.sdkskds.com",
-                                   platforms: ["Netflix, HBO GO, Filmweb"])
-    
-    /// ---
-    
-    let movie = Movie(title: "Scarface",
-                      overview: "The story about The story abou The story about The story about The story about The story about",
-                      posterURL: "https://www.sdkskds.com",
-                      platforms: ["Netflix, HBO GO, Filmweb"])
-    var onWatch: (() -> Void)? = {}
-    var onAnother: (() -> Void)? = {}
-    var onSave: (() -> Void)? = {}
-    
-    @State private var searching = true
-    @State private var showMovie = false
+    let onMovieFound: (Movie) -> Void
+
+    @StateObject private var viewModel: SearchMovieViewModel
     @State private var pulse = false
-    
+
+    init(engine: MoviePickEngineProtocol, onMovieFound: @escaping (Movie) -> Void) {
+        self.onMovieFound = onMovieFound
+        _viewModel = StateObject(wrappedValue: SearchMovieViewModel(engine: engine))
+    }
+
     var body: some View {
         ZStack {
-            VStack(spacing: 28) {
-                if searching {
-                    VStack(spacing:20) {
-                        
-                        Image(systemName:"sparkles")
-                            .font(.system(size:45))
-                            .foregroundStyle(.white)
-                            .scaleEffect(
-                                pulse ? 1.15 : 0.9
-                            )
-                        
-                        Text("Finding your movie")
-                            .font(.headline)
-                            .foregroundStyle(.gray)
-                        
+            switch viewModel.state {
+            case .searching:
+                VStack(spacing: 20) {
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 45))
+                        .foregroundStyle(.white)
+                        .scaleEffect(pulse ? 1.15 : 0.9)
+                        .animation(
+                            .easeInOut(duration: 0.7).repeatForever(autoreverses: true),
+                            value: pulse
+                        )
+
+                    Text("Szukam Twojego filmu…")
+                        .font(.headline)
+                        .foregroundStyle(.gray)
+                }
+                .transition(.opacity)
+
+            case .error(let message):
+                VStack(spacing: 16) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .font(.system(size: 40))
+                        .foregroundStyle(.red.opacity(0.8))
+
+                    Text(message)
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+
+                    Button("Spróbuj ponownie") {
+                        viewModel.findMovie(onFound: onMovieFound)
                     }
-                    .transition(.opacity)
+                    .font(.headline)
+                    .padding(.horizontal, 28)
+                    .padding(.vertical, 12)
+                    .background(AppColors.cardBackground)
+                    .foregroundStyle(.white)
+                    .cornerRadius(14)
                 }
-                
-                if showMovie {
-                    
-                }
+                .transition(.opacity)
             }
         }
-        
+        .animation(.easeInOut(duration: 0.35), value: viewModel.state.isError)
         .onAppear {
-            searchAnotherMovie()
-        }
-    }
-    
-    private func searchAnotherMovie() {
-        withAnimation(
-            .easeInOut(duration:0.7)
-        ){
             pulse = true
-        }
-        
-        DispatchQueue.main.asyncAfter(
-            deadline:.now()+1.3
-        ){
-            
-            withAnimation(
-                .spring(
-                    duration:0.7,
-                    bounce:0.25
-                )
-            ){
-                searching = false
-                showMovie = true
-            }
+            viewModel.findMovie(onFound: onMovieFound)
         }
     }
 }
 
+private extension SearchMovieViewModel.State {
+    var isError: Bool {
+        if case .error = self { return true }
+        return false
+    }
+}
+
 #Preview {
-    SearchMovieView()
+    SearchMovieView(engine: MockMoviePickEngine(), onMovieFound: { _ in })
+        .background(AppColors.primaryBackground)
 }

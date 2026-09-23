@@ -10,4 +10,5 @@ import Foundation
 enum AppScreen: Hashable {
     case welcomeToPickFlix
     case searchForMovie
+    case movieResult
 }

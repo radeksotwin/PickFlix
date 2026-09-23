@@ -13,6 +13,7 @@ import SwiftData
 
 struct WelcomeScreenView: View {
     @StateObject var viewModel = WelcomeScreenViewModel()
+    var onStartSearch: () -> Void = {}
 
     var body: some View {
         ZStack {
@@ -103,17 +104,11 @@ struct WelcomeScreenView: View {
     }
     
     private func startMovieSearch() {
-        withAnimation(
-            .spring(
-                duration: 0.45,
-                bounce: 0.12
-            )
-        ) {
+        withAnimation(.spring(duration: 0.45, bounce: 0.12)) {
             viewModel.isTransitioning = true
         }
-
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-         
+            onStartSearch()
         }
     }
 }
