@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class MockMoviePickEngine: MoviePickEngineProtocol {
+final class MockMoviePickEngine: MoviePickEngineProtocol, @unchecked Sendable {
     var result: Result<Movie, Error> = .success(
         Movie(
             title: "Scarface",

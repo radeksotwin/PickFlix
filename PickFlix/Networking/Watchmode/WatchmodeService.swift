@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol WatchmodeServiceProtocol {
+protocol WatchmodeServiceProtocol: Sendable {
     /// Returns subscription platform names for a given TMDb movie ID.
     func getSources(tmdbId: Int) async throws -> [String]
 }

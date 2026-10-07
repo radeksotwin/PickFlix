@@ -5,11 +5,11 @@
 
 import Foundation
 
-protocol MoviePickEngineProtocol {
+protocol MoviePickEngineProtocol: Sendable {
     func pickMovie() async throws -> Movie
 }
 
-final class MoviePickEngine: MoviePickEngineProtocol {
+final class MoviePickEngine: MoviePickEngineProtocol, Sendable {
     private let tmdb: TMDbServiceProtocol
     private let watchmode: WatchmodeServiceProtocol
 

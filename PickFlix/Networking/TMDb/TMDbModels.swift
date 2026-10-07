@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct TMDbDiscoverResponse: Decodable {
+struct TMDbDiscoverResponse: Decodable, Sendable {
     let page: Int
     let results: [TMDbMovie]
     let totalPages: Int
@@ -16,7 +16,7 @@ struct TMDbDiscoverResponse: Decodable {
     }
 }
 
-struct TMDbMovie: Decodable {
+struct TMDbMovie: Decodable, Sendable {
     let id: Int
     let title: String
     let overview: String

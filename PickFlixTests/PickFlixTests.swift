@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Test Doubles
 
-private final class MockTMDbService: TMDbServiceProtocol {
+private final class MockTMDbService: TMDbServiceProtocol, @unchecked Sendable {
     var stubbedResult: Result<TMDbDiscoverResponse, Error>
 
     init(_ result: Result<TMDbDiscoverResponse, Error>) {
@@ -21,7 +21,7 @@ private final class MockTMDbService: TMDbServiceProtocol {
     }
 }
 
-private final class MockWatchmodeService: WatchmodeServiceProtocol {
+private final class MockWatchmodeService: WatchmodeServiceProtocol, @unchecked Sendable {
     var stubbedResult: Result<[String], Error>
 
     init(_ result: Result<[String], Error> = .success([])) {
@@ -45,7 +45,7 @@ private func makeTMDbMovie(id: Int = 1, title: String = "Inception") -> TMDbMovi
 
 // MARK: - MoviePickEngine Tests
 
-@Suite("MoviePickEngine")
+@Suite("MoviePickEngine") @MainActor
 struct MoviePickEngineTests {
 
     @Test("Zwraca film przy poprawnej odpowiedzi API")
@@ -135,7 +135,7 @@ struct SearchMovieViewModelTests {
 
 // MARK: - TMDbModels JSON Decoding Tests
 
-@Suite("TMDbModels — dekodowanie JSON")
+@Suite("TMDbModels — dekodowanie JSON") @MainActor
 struct TMDbModelsTests {
 
     private let decoder = JSONDecoder()
@@ -180,7 +180,7 @@ struct TMDbModelsTests {
 
 // MARK: - WatchmodeModels JSON Decoding Tests
 
-@Suite("WatchmodeModels — dekodowanie JSON")
+@Suite("WatchmodeModels — dekodowanie JSON") @MainActor
 struct WatchmodeModelsTests {
 
     private let decoder = JSONDecoder()

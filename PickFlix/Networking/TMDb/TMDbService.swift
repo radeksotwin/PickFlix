@@ -5,7 +5,7 @@
 
 import Foundation
 
-protocol TMDbServiceProtocol {
+protocol TMDbServiceProtocol: Sendable {
     func discoverMovies(page: Int) async throws -> TMDbDiscoverResponse
 }
 

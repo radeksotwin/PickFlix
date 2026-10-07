@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum AppScreen: Hashable {
+enum AppScreen: Hashable, Sendable {
     case welcomeToPickFlix
     case searchForMovie
     case movieResult

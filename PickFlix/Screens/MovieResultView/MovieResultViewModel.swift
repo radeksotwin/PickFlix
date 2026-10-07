@@ -5,6 +5,7 @@
 
 import Foundation
 
+@MainActor
 final class MovieResultViewModel {
     let movie: Movie
     let onAnother: () -> Void

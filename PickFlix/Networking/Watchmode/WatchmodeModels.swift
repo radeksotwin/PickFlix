@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct WatchmodeSearchResponse: Decodable {
+struct WatchmodeSearchResponse: Decodable, Sendable {
     let titleResults: [WatchmodeTitle]
 
     enum CodingKeys: String, CodingKey {
@@ -13,16 +13,16 @@ struct WatchmodeSearchResponse: Decodable {
     }
 }
 
-struct WatchmodeTitle: Decodable {
+struct WatchmodeTitle: Decodable, Sendable {
     let id: Int
     let name: String
 }
 
-struct WatchmodeTitleDetails: Decodable {
+struct WatchmodeTitleDetails: Decodable, Sendable {
     let sources: [WatchmodeSource]?
 }
 
-struct WatchmodeSource: Decodable {
+struct WatchmodeSource: Decodable, Sendable {
     let name: String
     let type: String  // "sub", "rent", "buy", "free"
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie {
+struct Movie: Sendable {
     let title: String
     let overview: String
     let posterURL: String
