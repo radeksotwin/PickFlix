@@ -23,12 +23,11 @@ final class PickFlixUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testWelcomeScreen_hasStartButton() throws {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        XCTAssert(app.buttons["Pick tonight's movie"].waitForExistence(timeout: 3))
     }
 
     @MainActor

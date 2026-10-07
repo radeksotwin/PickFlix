@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "C1D25354-6368-4596-8DAD-F323FB6E8862",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:PickFlix.xcodeproj",
+      "identifier" : "41F412892F75546A0031ED50",
+      "name" : "PickFlix"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PickFlix.xcodeproj",
+        "identifier" : "41F412982F7554700031ED50",
+        "name" : "PickFlixTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:PickFlix.xcodeproj",
+        "identifier" : "41F412A22F7554700031ED50",
+        "name" : "PickFlixUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

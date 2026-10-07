@@ -62,3 +62,9 @@ To add a new screen: add a case to `AppScreen+Enum.swift`, add a branch in `Pick
 - `SearchMovieView`: stub — animated "Finding your movie" loader; movie result display not yet built
 - Movie search / AI integration: not yet implemented
 - Active branch: `claudeParty` (main: `main`)
+
+
+
+
+
+
