@@ -15,5 +15,9 @@ DerivedData/
 *.perspectivev3
 !default.perspectivev3
 
+# Claude cfg
+
+CLAUDE.md
+
 # macOS
 .DS_Store
